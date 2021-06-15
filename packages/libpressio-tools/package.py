@@ -9,7 +9,7 @@ class LibpressioTools(CMakePackage):
 
     version('master', branch='master')
 
-    depends_on('mpi')
+    depends_on('mpi',when="+mpi")
     depends_on('libpressio+hdf5+lua+libdistributed+mpi')
     depends_on('libdistributed')
     depends_on('boost')
@@ -25,6 +25,8 @@ class LibpressioTools(CMakePackage):
             args.append("-DLIBPRESSIO_TOOLS_HAS_OPT=YES")
         if "+error_injector" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_ERROR_INJECTOR=YES")
+        if "+mpi" in self.spec:
+            args.append("-DLIBPRESSIO_TOOLS_HAS_MPI=YES")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
